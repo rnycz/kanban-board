@@ -4,9 +4,9 @@ Built with React, TypeScript, SCSS<br />
 The following features have been implemented:
 * Enter the task and set the color
 * Drag'n'drop elements between columns
-* Edit a task, delete or mark as done
+* Edit a task (color and text), delete or mark as done
 
-TODO: notifications, mark as done - style, enable edit task color.
+TODO: notifications, add new functionalities
 ## Installation and Setup Instructions
 Clone down this repository:
 ```bash

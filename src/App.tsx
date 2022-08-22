@@ -70,7 +70,8 @@ const App: React.FC = () => {
           completedTodos={completedTodos}
           setCompletedTodos={setCompletedTodos}
           doingTodos={doingTodos}
-          setDoingTodos={setDoingTodos} />
+          setDoingTodos={setDoingTodos}
+          color={color} />
       </div>
     </DragDropContext>
   );

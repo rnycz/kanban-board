@@ -4,19 +4,27 @@ import {AiFillEdit, AiFillDelete} from "react-icons/ai";
 import {MdDoneAll, MdRemoveDone} from "react-icons/md";
 import "../styles/styles.css"
 import { Draggable } from "react-beautiful-dnd";
+import { CirclePicker, ColorResult } from "react-color";
 
 interface Props {
     index: number
     todo: Todo
     todos: Todo[]
     setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+    color: string
 }
 
-const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos}: Props) => {
+const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos, color}: Props) => {
 
     const [edit, setEdit] = useState<boolean>(false)
     const [editTodo, setEditTodo] = useState<string>(todo.todo)
+    const [editColor, setEditColor] = useState<string>(todo.color)
     const inputRef = useRef<HTMLInputElement>(null)
+    const [showColorPicker, setShowColorPicker] = useState<boolean>(false)
+
+    const handleChangeColor = (color: ColorResult) =>{
+        setEditColor(color.hex)
+    }
 
     useEffect(() =>{
         inputRef.current?.focus()
@@ -35,7 +43,7 @@ const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos}: Props) => {
     const handleEdit = (e: React.FormEvent, id: number) =>{
         e.preventDefault();
         setTodos(todos.map((todo) =>(
-            todo.id === id ? {...todo, todo: editTodo} : todo
+            todo.id === id ? {...todo, todo: editTodo, color: editColor} : todo
         )))
         setEdit(false)
     }
@@ -50,15 +58,21 @@ const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos}: Props) => {
                         {
                             edit ? (
                                 <div className="single-todo-container">
-                                    <div className="single-todo-color" style={{backgroundColor: todo.color}}></div >
+                                    <div className="single-todo-color-edit" onClick={() => setShowColorPicker(!showColorPicker)}
+                                        style={{backgroundColor: editColor}} >
+                                        {
+                                            showColorPicker ? <CirclePicker className="input-color" 
+                                            onChange={handleChangeColor} /> : null
+                                        }                                        
+                                    </div >
                                     <input value={editTodo} onChange={(e) => setEditTodo(e.target.value)} 
                                     className="single-todo-input" ref={inputRef} />
                                 </div>
                             ):(
                                 todo.isDone ? (
-                                    <div className="single-todo-container">
+                                    <div className="single-todo-container done">
                                         <div className="single-todo-color" style={{backgroundColor: todo.color}}></div >
-                                        <s className="single-todo-text">{todo.todo}</s>
+                                        <span className="single-todo-text">{todo.todo}</span>
                                     </div>  
                                 ):(
                                     <div className="single-todo-container">
@@ -72,6 +86,7 @@ const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos}: Props) => {
                             <span className="icon" onClick={(e) =>{
                                 if(!edit && !todo.isDone){
                                     setEdit(!edit)
+                                    setShowColorPicker(false)
                                 }
                                 if(edit){
                                     handleEdit(e, todo.id)
@@ -82,7 +97,11 @@ const SingleTodo: React.FC<Props> = ({index, todo, todos, setTodos}: Props) => {
                             <span className="icon" onClick={() =>handleDelete(todo.id)}>
                                 <AiFillDelete />
                             </span>
-                            <span className="icon" onClick={() =>handleDone(todo.id)}>
+                            <span className="icon" onClick={() =>{
+                                if(!edit){
+                                    handleDone(todo.id)
+                                }
+                            }}>
                                 {
                                     todo.isDone ? <MdRemoveDone /> : <MdDoneAll />
                                 }                            
