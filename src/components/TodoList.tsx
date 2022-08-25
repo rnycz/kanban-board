@@ -11,10 +11,9 @@ interface Props{
     setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
     doingTodos: Todo[]
     setDoingTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-    color: string
 }
 
-const TodoList: React.FC<Props> = ({ todos, setTodos, completedTodos, setCompletedTodos, doingTodos, setDoingTodos, color }: Props) => {
+const TodoList: React.FC<Props> = ({ todos, setTodos, completedTodos, setCompletedTodos, doingTodos, setDoingTodos }: Props) => {
   return (
     <div className="container">
         <Droppable droppableId="TodosList" >
@@ -28,8 +27,7 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, completedTodos, setComplet
                         index={index}
                         todo={todo}
                         todos={todos} 
-                        setTodos={setTodos}
-                        color={color} />
+                        setTodos={setTodos} />
                     ))}
                     {provided.placeholder}
                 </div>
@@ -47,8 +45,7 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, completedTodos, setComplet
                         index={index}
                         todo={todo}
                         todos={doingTodos} 
-                        setTodos={setDoingTodos}
-                        color={color} />
+                        setTodos={setDoingTodos} />
                     ))}
                     {provided.placeholder}
                 </div>
@@ -66,8 +63,7 @@ const TodoList: React.FC<Props> = ({ todos, setTodos, completedTodos, setComplet
                             index={index} 
                             todo={todo}
                             todos={completedTodos} 
-                            setTodos={setCompletedTodos}
-                            color={color} />
+                            setTodos={setCompletedTodos} />
                         ))}
                         {provided.placeholder}
                     </div>

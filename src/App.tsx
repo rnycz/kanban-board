@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './styles/styles.css';
-import InputField from './components/InputField';
+import AddNewTask from './components/AddNewTask';
 import TodoList from "./components/TodoList";
-import {Todo} from "./model";
-import {DragDropContext, DropResult} from "react-beautiful-dnd";
+import { Todo, addTaskError } from "./model";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App: React.FC = () => {
 
@@ -11,18 +13,34 @@ const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([])
   const [doingTodos, setDoingTodos] = useState<Todo[]>([])
-  const [color, setColor] = useState<string>("#FFFFFF")
+  const [color, setColor] = useState<string>("")
+  const [finishTask, setFinishTask] = useState<Date>(new Date());
+  const [showOptions, setShowOptions] = useState<boolean>(false)
+
+  const pad = (num: number) => ("0" + num).slice(-2);
+  const setDate = (date: Date) => {
+    let day = date.getDate(),
+    month = date.getMonth()+1,
+    year = date.getFullYear();
+    return `${pad(day)}.${pad(month)}.${year}`;
+  }
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(todoInput){
+    if(todoInput && color){
       setTodos([...todos, 
         { id: Date.now(),
         todo: todoInput,
         isDone: false,
-        color: color }])
+        color: color,
+        addDate: setDate(new Date()),
+        finishDate: setDate(finishTask) }])
       setTodoInput("")
+      setShowOptions(!showOptions)
+      setFinishTask(new Date())
+    }else{
+      addTaskError()
     }
   }
 
@@ -61,17 +79,29 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
         <span className="heading">Kanban Board</span>
-        <InputField todoInput={todoInput}
+        <AddNewTask todoInput={todoInput}
         setTodoInput={setTodoInput}
         handleAdd={handleAdd}
         color={color}
-        setColor={setColor} />
+        setColor={setColor}
+        finishTask={finishTask}
+        setFinishTask={setFinishTask}
+        setDate={setDate}
+        showOptions={showOptions}
+        setShowOptions={setShowOptions} />
         <TodoList todos={todos} setTodos={setTodos} 
           completedTodos={completedTodos}
           setCompletedTodos={setCompletedTodos}
           doingTodos={doingTodos}
-          setDoingTodos={setDoingTodos}
-          color={color} />
+          setDoingTodos={setDoingTodos} />
+        <ToastContainer newestOnTop={true}
+          pauseOnFocusLoss={false}
+          position={"top-right"}
+          autoClose={2000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true} />
       </div>
     </DragDropContext>
   );
