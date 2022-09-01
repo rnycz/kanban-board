@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-body{
+body {
     margin: 0;
 }
 $main-color: #474747;
@@ -17,33 +17,35 @@ $main-color-darken: #1f1f1f;
     width: 25px;
     border-radius: 50px;
 }
-
-.App{
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: $main-color;
-  font-family: 'Poppins', sans-serif;
+html {
+    background-color: $main-color;
+}
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $main-color;
+    font-family: 'Poppins', sans-serif;
 }
 
-.heading{
-  text-transform: uppercase;
-  font-size: 35px;
-  margin: 20px 0;
-  color: white;
-  z-index: 1;
-  text-align: center;
+.heading {
+    text-transform: uppercase;
+    font-size: 35px;
+    margin: 20px 0;
+    color: white;
+    z-index: 1;
+    text-align: center;
 }
 
 @media (max-width: 900px) {
-  .container{
-    flex-direction: column;
-  }
+    .container {
+        flex-direction: column;
+    }
 }
 
-.task-container{
-    .task-modal-button{
+.task-container {
+    .task-modal-button {
         border: 2px solid white;
         background-color: inherit;
         font-size: 20px;
@@ -52,20 +54,24 @@ $main-color-darken: #1f1f1f;
         border-radius: 5px;
         cursor: pointer;
         transition: 0.3s all;
-        &:hover{
+        &:hover {
             background-color: white;
             color: black;
             box-shadow: 0 0 5px black;
         }
-        &:active{
-            transform: scale(0.9)
+        &:active {
+            transform: scale(0.9);
         }
     }
     @keyframes animate-modal {
-        from {opacity: 0}
-        to {opacity: 1}
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
-    .task-modal{
+    .task-modal {
         position: fixed;
         z-index: 1;
         left: 0;
@@ -73,33 +79,33 @@ $main-color-darken: #1f1f1f;
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.9);
+        background-color: $main-color;
         display: flex;
-        justify-content:center;
+        justify-content: center;
         align-items: center;
         flex-direction: column;
         gap: 10px;
         animation: animate-modal 0.3s;
-        .close-modal{
+        .close-modal {
             color: white;
-            position:absolute;
+            position: absolute;
             right: 15px;
             top: 15px;
             font-size: 30px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s color;
-            &:hover{
+            &:hover {
                 color: rgb(204, 204, 204);
             }
         }
-        .input{
+        .input {
             display: flex;
             width: 75%;
             margin: 60px auto 0;
             position: relative;
             align-items: center;
-            .input-box{
+            .input-box {
                 width: 100%;
                 border-radius: 50px;
                 padding: 15px 65px 15px 25px;
@@ -122,68 +128,67 @@ $main-color-darken: #1f1f1f;
                 transition: 0.3s all;
                 box-shadow: 0 0 5px black;
                 cursor: pointer;
-                &:hover{
+                &:hover {
                     background-color: $main-color-darken;
                     box-shadow: 0 0 10px black;
                 }
-                &:active{
+                &:active {
                     transform: scale(0.8);
                     box-shadow: 0 0 5px black;
                 }
             }
         }
-        .options-container{
+        .options-container {
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
             align-items: center;
             gap: 20px;
-            margin: 0 5px;
-            .icon-option{
+            margin: 0 10px;
+            .icon-option {
                 font-size: 30px;
                 transition: 0.3s transform;
-                &:hover{
+                &:hover {
                     transform: scale(1.1);
                 }
             }
-            .input-color-container{
+            .input-color-container {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 gap: 20px;
-                .input-color{
+                .input-color {
                     background-color: black;
                     border-radius: 5px;
                     z-index: 2;
                     padding: 14px 0 0 14px;
-                    width: 250px;
+                    margin-right: 0 !important;
                 }
-                .task-color{
+                .task-color {
                     width: fit-content;
                     border-radius: 5px;
                     padding: 5px 10px;
-                    background-color: whitesmoke;    
+                    background-color: whitesmoke;
                 }
-                .task-finish{
+                .task-finish {
                     width: fit-content;
                     border-radius: 5px;
                     padding: 5px 10px;
                     background-color: whitesmoke;
                 }
             }
-            .calendar{
+            .calendar {
                 width: 300px;
                 border-radius: 5px;
                 margin-bottom: 10px;
-                abbr[title]{
+                abbr[title] {
                     text-decoration: none;
                 }
             }
         }
     }
 }
-
 
 .container {
     min-width: 95%;
@@ -203,7 +208,7 @@ $main-color-darken: #1f1f1f;
             padding: 15px;
             color: white;
         }
-        .single-todo{
+        .single-todo {
             display: flex;
             justify-content: space-between;
             flex-direction: column;
@@ -217,10 +222,10 @@ $main-color-darken: #1f1f1f;
             &:hover {
                 box-shadow: 0 0 10px black;
             }
-            &:active{
+            &:active {
                 cursor: grabbing;
             }
-            .done{
+            .done {
                 opacity: 0.9;
                 transform: scale(0.8);
                 border-radius: 5px;
@@ -230,28 +235,55 @@ $main-color-darken: #1f1f1f;
                 padding-left: 10px;
                 width: fit-content;
             }
-            hr{
+            hr {
                 width: 100%;
                 border: 0;
                 height: 1px;
                 background: rgb(38, 38, 38);
-                background-image: linear-gradient(to right, lightgray, rgb(38, 38, 38), lightgray);
+                background-image: linear-gradient(
+                    to right,
+                    lightgray,
+                    rgb(38, 38, 38),
+                    lightgray
+                );
             }
-            .time-container{
+            .time-container {
                 display: flex;
                 justify-content: space-between;
-                .date{
+                .date {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     gap: 3px;
                     font-size: 14px;
-                    .date-icon{
+                    .date-icon {
                         font-size: 18px;
                     }
                 }
+                .date-edit {
+                    transition: 0.3s all;
+                    position: relative;
+                    cursor: pointer;
+                    border: 2px solid black;
+                    border-radius: 5px;
+                    padding: 0 5px;
+                    &:hover {
+                        box-shadow: 0 0 5px black;
+                    }
+                    .react-calendar {
+                        position: absolute;
+                        left: -150px;
+                        top: 25px;
+                        z-index: 2;
+                        width: 260px;
+                        max-width: none;
+                        abbr[title] {
+                            text-decoration: none;
+                        }
+                    }
+                }
             }
-            .single-todo-container{
+            .single-todo-container {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
@@ -264,35 +296,33 @@ $main-color-darken: #1f1f1f;
                     border: none;
                     font-size: 17px;
                     overflow-wrap: anywhere;
-                    &:focus{
+                    &:focus {
                         outline: none;
                     }
                 }
-                .single-todo-color{
+                .single-todo-color {
                     @include color-circle;
                 }
-                .single-todo-color-edit{
+                .single-todo-color-edit {
                     @include color-circle;
                     position: relative;
                     cursor: pointer;
-                    box-shadow:inset 0px 0px 0px 3px white;
+                    box-shadow: inset 0px 0px 0px 3px white;
                     border: 2px solid black;
-                    transform: scale(0.95);
-                    transition: 0.3s box-shadow, 0.3s transform;
-                    &:hover{
+                    transition: 0.3s all;
+                    &:hover {
                         box-shadow: none;
-                        transform: scale(1);
                     }
-                    &:active{
+                    &:active {
                         transform: scale(0.9);
                     }
-                    .input-color{
+                    .input-color {
                         @include input-color;
                         left: 0px;
                         top: 32px;
                     }
                 }
-                .single-todo-input{
+                .single-todo-input {
                     flex: 1 1;
                     width: 100%;
                     border-radius: 5px;
@@ -301,12 +331,16 @@ $main-color-darken: #1f1f1f;
                     font-size: 17px;
                     padding: 5px 10px;
                     margin-left: 5px;
-                    &:focus{
+                    transition: 0.3s box-shadow;
+                    &:focus {
                         border: 2px solid $main-color-darken;
+                    }
+                    &:hover {
+                        box-shadow: 0 0 5px black;
                     }
                 }
             }
-            .icons-container{
+            .icons-container {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -317,29 +351,29 @@ $main-color-darken: #1f1f1f;
                     font-size: 25px;
                     cursor: pointer;
                     transition: 0.3s transform;
-                    &:hover{
+                    &:hover {
                         transform: translateY(-3px);
                     }
                 }
             }
         }
     }
-    .completed{
+    .completed {
         background-color: rgb(226, 94, 94);
     }
-    .doing{
+    .doing {
         background-color: yellowgreen;
     }
-    .drag-doing{
+    .drag-doing {
         background-color: green;
     }
-    .drag-complete{
+    .drag-complete {
         background-color: rgb(196, 44, 44);
     }
-    .drag-todo{
+    .drag-todo {
         background-color: rgb(19, 136, 145);
     }
-    .drag-form{
+    .drag-form {
         box-shadow: 0 0 25px black;
     }
 }
