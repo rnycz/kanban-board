@@ -3,6 +3,22 @@ body {
   margin: 0;
 }
 
+:root {
+  --font-color: black;
+  --background-color: white;
+  --hr-background: black;
+  --border: #474747;
+  --border-darken: #1f1f1f;
+}
+
+[data-theme=dark] {
+  --font-color: white;
+  --background-color: black;
+  --hr-background: white;
+  --border: white;
+  --border-darken: white;
+}
+
 html {
   background-color: #474747;
 }
@@ -16,18 +32,14 @@ html {
   font-family: "Poppins", sans-serif;
 }
 
-.heading {
-  text-transform: uppercase;
-  font-size: 35px;
-  margin: 20px 0;
-  color: white;
-  z-index: 1;
-  text-align: center;
-}
-
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
+  }
+}
+@media (max-width: 420px) {
+  .sidebar .icon-bars {
+    top: 85px !important;
   }
 }
 .task-container .task-modal-button {
@@ -66,42 +78,61 @@ html {
 }
 .task-container .task-modal {
   position: fixed;
-  z-index: 1;
+  z-index: 4;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #474747;
+  background-color: rgba(0, 0, 0, 0.85);
+  -webkit-animation: animate-modal 0.3s;
+          animation: animate-modal 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.task-container .task-modal .task-modal-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
   gap: 10px;
-  -webkit-animation: animate-modal 0.3s;
-          animation: animate-modal 0.3s;
+  background-color: #474747;
 }
-.task-container .task-modal .close-modal {
+.task-container .task-modal .task-modal-wrap .close-modal {
   color: white;
   position: absolute;
-  right: 15px;
-  top: 15px;
+  right: 30px;
+  top: 30px;
   font-size: 30px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s color;
-}
-.task-container .task-modal .close-modal:hover {
-  color: rgb(204, 204, 204);
-}
-.task-container .task-modal .input {
+  transition: 0.3s all;
+  background-color: #474747;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
-  width: 75%;
-  margin: 60px auto 0;
+  justify-content: center;
+  align-items: center;
+}
+.task-container .task-modal .task-modal-wrap .close-modal:hover {
+  color: #474747;
+  background-color: white;
+}
+.task-container .task-modal .task-modal-wrap .input {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
   position: relative;
   align-items: center;
 }
-.task-container .task-modal .input .input-box {
+.task-container .task-modal .task-modal-wrap .input .input-box {
   width: 100%;
   border-radius: 50px;
   padding: 15px 65px 15px 25px;
@@ -111,7 +142,7 @@ html {
   transition: 0.3s;
   box-shadow: inset 0 0 5px black;
 }
-.task-container .task-modal .input .input-submit {
+.task-container .task-modal .task-modal-wrap .input .input-submit {
   position: absolute;
   width: 45px;
   height: 45px;
@@ -125,44 +156,43 @@ html {
   box-shadow: 0 0 5px black;
   cursor: pointer;
 }
-.task-container .task-modal .input .input-submit:hover {
+.task-container .task-modal .task-modal-wrap .input .input-submit:hover {
   background-color: #1f1f1f;
   box-shadow: 0 0 10px black;
 }
-.task-container .task-modal .input .input-submit:active {
+.task-container .task-modal .task-modal-wrap .input .input-submit:active {
   transform: scale(0.8);
   box-shadow: 0 0 5px black;
 }
-.task-container .task-modal .options-container {
+.task-container .task-modal .task-modal-wrap .options-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin: 0 10px;
 }
-.task-container .task-modal .options-container .icon-option {
+.task-container .task-modal .task-modal-wrap .options-container .icon-option {
   font-size: 30px;
   transition: 0.3s transform;
 }
-.task-container .task-modal .options-container .icon-option:hover {
+.task-container .task-modal .task-modal-wrap .options-container .icon-option:hover {
   transform: scale(1.1);
 }
-.task-container .task-modal .options-container .input-color-container {
+.task-container .task-modal .task-modal-wrap .options-container .input-color-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
 }
-.task-container .task-modal .options-container .input-color-container .input-color {
+.task-container .task-modal .task-modal-wrap .options-container .input-color-container .input-color {
   background-color: black;
   border-radius: 5px;
   z-index: 2;
   padding: 14px 0 0 14px;
   margin-right: 0 !important;
 }
-.task-container .task-modal .options-container .input-color-container .task-color {
+.task-container .task-modal .task-modal-wrap .options-container .input-color-container .task-color {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -170,7 +200,7 @@ html {
   padding: 5px 10px;
   background-color: whitesmoke;
 }
-.task-container .task-modal .options-container .input-color-container .task-finish {
+.task-container .task-modal .task-modal-wrap .options-container .input-color-container .task-finish {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -178,12 +208,11 @@ html {
   padding: 5px 10px;
   background-color: whitesmoke;
 }
-.task-container .task-modal .options-container .calendar {
+.task-container .task-modal .task-modal-wrap .options-container .calendar {
   width: 300px;
   border-radius: 5px;
-  margin-bottom: 10px;
 }
-.task-container .task-modal .options-container .calendar abbr[title] {
+.task-container .task-modal .task-modal-wrap .options-container .calendar abbr[title] {
   text-decoration: none;
 }
 
@@ -198,7 +227,7 @@ html {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(50, 195, 205);
+  background-color: #7c7b7b;
   width: 100%;
   margin: 0 auto;
 }
@@ -211,8 +240,9 @@ html {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  box-shadow: inset 0 0 5px black;
-  background-color: white;
+  box-shadow: inset 0 0 5px var(--font-color);
+  background-color: var(--background-color);
+  color: var(--font-color);
   border-radius: 5px;
   margin: 5px 10px;
   padding: 10px;
@@ -231,9 +261,9 @@ html {
   opacity: 0.9;
   transform: scale(0.8);
   border-radius: 5px;
-  box-shadow: 0 0 5px black;
-  background-color: #1f1f1f;
-  color: white;
+  box-shadow: 0 0 5px var(--font-color);
+  background-color: var(--border-darken);
+  color: var(--background-color);
   padding-left: 10px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -243,8 +273,7 @@ html {
   width: 100%;
   border: 0;
   height: 1px;
-  background: rgb(38, 38, 38);
-  background-image: linear-gradient(to right, lightgray, rgb(38, 38, 38), lightgray);
+  background: var(--hr-background);
 }
 .container .todos .single-todo .time-container {
   display: flex;
@@ -257,6 +286,9 @@ html {
   gap: 3px;
   font-size: 14px;
 }
+.container .todos .single-todo .time-container .date:nth-child(2) .date-icon {
+  color: black;
+}
 .container .todos .single-todo .time-container .date .date-icon {
   font-size: 18px;
 }
@@ -264,12 +296,12 @@ html {
   transition: 0.3s all;
   position: relative;
   cursor: pointer;
-  border: 2px solid black;
+  border: 2px solid var(--border-darken);
   border-radius: 5px;
   padding: 0 5px;
 }
 .container .todos .single-todo .time-container .date-edit:hover {
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 5px var(--font-color);
 }
 .container .todos .single-todo .time-container .date-edit .react-calendar {
   position: absolute;
@@ -311,8 +343,8 @@ html {
   border-radius: 50px;
   position: relative;
   cursor: pointer;
-  box-shadow: inset 0px 0px 0px 3px white;
-  border: 2px solid black;
+  box-shadow: inset 0px 0px 0px 3px var(--background-color);
+  border: 2px solid var(--border-darken);
   transition: 0.3s all;
 }
 .container .todos .single-todo .single-todo-container .single-todo-color-edit:hover {
@@ -335,17 +367,19 @@ html {
   width: 100%;
   border-radius: 5px;
   outline: none;
-  border: 1px solid #474747;
+  border: 1px solid var(--border);
   font-size: 17px;
   padding: 5px 10px;
   margin-left: 5px;
   transition: 0.3s box-shadow;
+  background-color: var(--background-color);
+  color: var(--font-color);
 }
 .container .todos .single-todo .single-todo-container .single-todo-input:focus {
-  border: 2px solid #1f1f1f;
+  border: 2px solid var(--border-darken);
 }
 .container .todos .single-todo .single-todo-container .single-todo-input:hover {
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 5px var(--font-color);
 }
 .container .todos .single-todo .icons-container {
   display: flex;
@@ -363,21 +397,160 @@ html {
 .container .todos .single-todo .icons-container .icon:hover {
   transform: translateY(-3px);
 }
-.container .completed {
-  background-color: rgb(226, 94, 94);
+.container .drag {
+  background-color: darkgreen;
 }
-.container .doing {
-  background-color: yellowgreen;
+
+.toggle-theme-wrapper h3 {
+  margin: 5px 10px;
+  text-align: center;
+  color: white;
 }
-.container .drag-doing {
-  background-color: green;
+.toggle-theme-wrapper .toggle-theme-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
-.container .drag-complete {
-  background-color: rgb(196, 44, 44);
+.toggle-theme-wrapper .toggle-theme-container span {
+  font-size: 25px;
 }
-.container .drag-todo {
-  background-color: rgb(19, 136, 145);
+.toggle-theme-wrapper .toggle-theme-container .toggle-theme {
+  position: relative;
+  display: inline-block;
+  height: 34px;
+  width: 60px;
 }
-.container .drag-form {
-  box-shadow: 0 0 25px black;
+.toggle-theme-wrapper .toggle-theme-container .toggle-theme input {
+  display: none;
+}
+.toggle-theme-wrapper .toggle-theme-container .toggle-theme input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.toggle-theme-wrapper .toggle-theme-container .toggle-theme input:checked + .slider {
+  background-color: cornflowerblue;
+}
+.toggle-theme-wrapper .toggle-theme-container .slider {
+  background-color: #ccc;
+  position: absolute;
+  cursor: pointer;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: 0.3s all;
+  border-radius: 34px;
+}
+.toggle-theme-wrapper .toggle-theme-container .slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.3s all;
+  width: 26px;
+  border-radius: 50%;
+}
+
+.sidebar {
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px 1px #333333;
+}
+.sidebar .icon-bars {
+  color: white;
+  padding: 15px;
+  font-size: 35px;
+  cursor: pointer;
+  transition: 0.3s color;
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
+.sidebar .icon-bars:hover {
+  color: #9b9b9b;
+}
+.sidebar .heading {
+  text-transform: uppercase;
+  font-size: 35px;
+  color: white;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.nav-menu {
+  background-color: #333333;
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 0.8s;
+  z-index: 3;
+  box-shadow: 1px 0 3px 1px #333333;
+}
+.nav-menu .navbar-close {
+  color: white;
+  padding: 15px;
+  font-size: 35px;
+  cursor: pointer;
+  transition: 0.3s color;
+}
+.nav-menu .navbar-close:hover {
+  color: #9b9b9b;
+}
+.nav-menu .nav-menu-items {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.nav-menu .copyrights {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  color: white;
+  font-size: 13px;
+}
+.nav-menu .copyrights a {
+  color: white;
+}
+.nav-menu .copyrights a:hover {
+  text-decoration: none;
+}
+
+.active {
+  left: 0;
+  transition: 0.4s;
+}
+
+.random-joke-container h3 {
+  margin: 5px;
+  text-align: center;
+  color: white;
+}
+.random-joke-container .random-joke {
+  background-color: #7c7b7b;
+  padding: 10px;
+  border-radius: 5px;
+  width: 85%;
+  margin: auto;
+  color: white;
+  text-align: center;
+}
+.random-joke-container .random-joke p {
+  font-weight: bold;
+  font-size: 18px;
 }/*# sourceMappingURL=styles.css.map */

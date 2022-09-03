@@ -27,7 +27,7 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos ${
-                            snapshot.isDraggingOver ? 'drag-todo' : ''
+                            snapshot.isDraggingOver ? 'drag' : ''
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
@@ -50,12 +50,12 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos doing ${
-                            snapshot.isDraggingOver ? 'drag-doing' : ''
+                            snapshot.isDraggingOver ? 'drag' : ''
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
-                        <span className="todos-heading">Doing Tasks</span>
+                        <span className="todos-heading">In Progress Tasks</span>
                         {doingTodos.map((todo, index) => (
                             <SingleTodo
                                 key={todo.id}
@@ -73,7 +73,7 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos completed ${
-                            snapshot.isDraggingOver ? 'drag-complete' : ''
+                            snapshot.isDraggingOver ? 'drag' : ''
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}

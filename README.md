@@ -8,8 +8,10 @@ The following features have been implemented:
 -   Drag'n'drop elements between columns
 -   Edit a task (color, text, finish task date), delete or mark as done
 -   Notifications e.g. successfully edited a task
+-   Sidebar with toggle button (dark/light mode for task cards) and random joke
+-   Random joke fetched from [Dev Joke API](https://documenter.getpostman.com/view/16443297/TzkyLee7)
 
-TODO: add new functionalities
+TODO: add MERN to enable login and register
 
 ## Installation and Setup Instructions
 
@@ -42,3 +44,5 @@ http://localhost:3000/
 ![](./public/app-screen1.PNG) <br />
 Add New Task modal window below <br />
 ![](./public/app-screen2.PNG) <br />
+Sidebar with toggle button and random joke <br />
+![](./public/app-screen3.PNG) <br />

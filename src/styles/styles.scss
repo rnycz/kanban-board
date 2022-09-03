@@ -3,8 +3,24 @@
 body {
     margin: 0;
 }
+
+:root {
+    --font-color: black;
+    --background-color: white;
+    --hr-background: black;
+    --border: #474747;
+    --border-darken: #1f1f1f;
+}
+[data-theme='dark'] {
+    --font-color: white;
+    --background-color: black;
+    --hr-background: white;
+    --border: white;
+    --border-darken: white;
+}
 $main-color: #474747;
 $main-color-darken: #1f1f1f;
+$main-color-lighter: #7c7b7b;
 @mixin input-color {
     padding: 14px 0 0 14px;
     position: absolute;
@@ -29,18 +45,16 @@ html {
     font-family: 'Poppins', sans-serif;
 }
 
-.heading {
-    text-transform: uppercase;
-    font-size: 35px;
-    margin: 20px 0;
-    color: white;
-    z-index: 1;
-    text-align: center;
-}
-
 @media (max-width: 900px) {
     .container {
         flex-direction: column;
+    }
+}
+@media (max-width: 420px) {
+    .sidebar {
+        .icon-bars {
+            top: 85px !important;
+        }
     }
 }
 
@@ -73,117 +87,132 @@ html {
     }
     .task-modal {
         position: fixed;
-        z-index: 1;
+        z-index: 4;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: $main-color;
+        background-color: rgba(0, 0, 0, 0.85);
+        animation: animate-modal 0.3s;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        gap: 10px;
-        animation: animate-modal 0.3s;
-        .close-modal {
-            color: white;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s color;
-            &:hover {
-                color: rgb(204, 204, 204);
-            }
-        }
-        .input {
+        .task-modal-wrap {
             display: flex;
-            width: 75%;
-            margin: 60px auto 0;
-            position: relative;
-            align-items: center;
-            .input-box {
-                width: 100%;
-                border-radius: 50px;
-                padding: 15px 65px 15px 25px;
-                font-size: 20px;
-                border: none;
-                outline: none;
-                transition: 0.3s;
-                box-shadow: inset 0 0 5px black;
-            }
-            .input-submit {
-                position: absolute;
-                width: 45px;
-                height: 45px;
-                border-radius: 50px;
-                right: 5px;
-                border: none;
-                font-size: 15px;
-                background-color: $main-color;
-                color: white;
-                transition: 0.3s all;
-                box-shadow: 0 0 5px black;
-                cursor: pointer;
-                &:hover {
-                    background-color: $main-color-darken;
-                    box-shadow: 0 0 10px black;
-                }
-                &:active {
-                    transform: scale(0.8);
-                    box-shadow: 0 0 5px black;
-                }
-            }
-        }
-        .options-container {
-            display: flex;
-            flex-flow: row wrap;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            margin: 0 10px;
-            .icon-option {
+            flex-direction: column;
+            width: fit-content;
+            padding: 10px;
+            border-radius: 5px;
+            gap: 10px;
+            background-color: $main-color;
+            .close-modal {
+                color: white;
+                position: absolute;
+                right: 30px;
+                top: 30px;
                 font-size: 30px;
-                transition: 0.3s transform;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s all;
+                background-color: $main-color;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 &:hover {
-                    transform: scale(1.1);
+                    color: $main-color;
+                    background-color: white;
                 }
             }
-            .input-color-container {
+            .input {
                 display: flex;
-                flex-direction: column;
+                width: 90%;
+                margin: 0 auto;
+                position: relative;
+                align-items: center;
+                .input-box {
+                    width: 100%;
+                    border-radius: 50px;
+                    padding: 15px 65px 15px 25px;
+                    font-size: 20px;
+                    border: none;
+                    outline: none;
+                    transition: 0.3s;
+                    box-shadow: inset 0 0 5px black;
+                }
+                .input-submit {
+                    position: absolute;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50px;
+                    right: 5px;
+                    border: none;
+                    font-size: 15px;
+                    background-color: $main-color;
+                    color: white;
+                    transition: 0.3s all;
+                    box-shadow: 0 0 5px black;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: $main-color-darken;
+                        box-shadow: 0 0 10px black;
+                    }
+                    &:active {
+                        transform: scale(0.8);
+                        box-shadow: 0 0 5px black;
+                    }
+                }
+            }
+            .options-container {
+                display: flex;
+                flex-flow: row wrap;
                 justify-content: center;
                 align-items: center;
                 gap: 20px;
-                .input-color {
-                    background-color: black;
-                    border-radius: 5px;
-                    z-index: 2;
-                    padding: 14px 0 0 14px;
-                    margin-right: 0 !important;
+                .icon-option {
+                    font-size: 30px;
+                    transition: 0.3s transform;
+                    &:hover {
+                        transform: scale(1.1);
+                    }
                 }
-                .task-color {
-                    width: fit-content;
-                    border-radius: 5px;
-                    padding: 5px 10px;
-                    background-color: whitesmoke;
+                .input-color-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+                    .input-color {
+                        background-color: black;
+                        border-radius: 5px;
+                        z-index: 2;
+                        padding: 14px 0 0 14px;
+                        margin-right: 0 !important;
+                    }
+                    .task-color {
+                        width: fit-content;
+                        border-radius: 5px;
+                        padding: 5px 10px;
+                        background-color: whitesmoke;
+                    }
+                    .task-finish {
+                        width: fit-content;
+                        border-radius: 5px;
+                        padding: 5px 10px;
+                        background-color: whitesmoke;
+                    }
                 }
-                .task-finish {
-                    width: fit-content;
+                .calendar {
+                    width: 300px;
                     border-radius: 5px;
-                    padding: 5px 10px;
-                    background-color: whitesmoke;
-                }
-            }
-            .calendar {
-                width: 300px;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                abbr[title] {
-                    text-decoration: none;
+                    abbr[title] {
+                        text-decoration: none;
+                    }
                 }
             }
         }
@@ -200,7 +229,7 @@ html {
         border-radius: 5px;
         display: flex;
         flex-direction: column;
-        background-color: rgb(50, 195, 205);
+        background-color: $main-color-lighter;
         width: 100%;
         margin: 0 auto;
         .todos-heading {
@@ -212,8 +241,9 @@ html {
             display: flex;
             justify-content: space-between;
             flex-direction: column;
-            box-shadow: inset 0 0 5px black;
-            background-color: white;
+            box-shadow: inset 0 0 5px var(--font-color);
+            background-color: var(--background-color);
+            color: var(--font-color);
             border-radius: 5px;
             margin: 5px 10px;
             padding: 10px;
@@ -229,9 +259,9 @@ html {
                 opacity: 0.9;
                 transform: scale(0.8);
                 border-radius: 5px;
-                box-shadow: 0 0 5px black;
-                background-color: $main-color-darken;
-                color: white;
+                box-shadow: 0 0 5px var(--font-color);
+                background-color: var(--border-darken);
+                color: var(--background-color);
                 padding-left: 10px;
                 width: fit-content;
             }
@@ -239,13 +269,7 @@ html {
                 width: 100%;
                 border: 0;
                 height: 1px;
-                background: rgb(38, 38, 38);
-                background-image: linear-gradient(
-                    to right,
-                    lightgray,
-                    rgb(38, 38, 38),
-                    lightgray
-                );
+                background: var(--hr-background);
             }
             .time-container {
                 display: flex;
@@ -256,6 +280,11 @@ html {
                     align-items: center;
                     gap: 3px;
                     font-size: 14px;
+                    &:nth-child(2) {
+                        .date-icon {
+                            color: black;
+                        }
+                    }
                     .date-icon {
                         font-size: 18px;
                     }
@@ -264,11 +293,11 @@ html {
                     transition: 0.3s all;
                     position: relative;
                     cursor: pointer;
-                    border: 2px solid black;
+                    border: 2px solid var(--border-darken);
                     border-radius: 5px;
                     padding: 0 5px;
                     &:hover {
-                        box-shadow: 0 0 5px black;
+                        box-shadow: 0 0 5px var(--font-color);
                     }
                     .react-calendar {
                         position: absolute;
@@ -307,8 +336,8 @@ html {
                     @include color-circle;
                     position: relative;
                     cursor: pointer;
-                    box-shadow: inset 0px 0px 0px 3px white;
-                    border: 2px solid black;
+                    box-shadow: inset 0px 0px 0px 3px var(--background-color);
+                    border: 2px solid var(--border-darken);
                     transition: 0.3s all;
                     &:hover {
                         box-shadow: none;
@@ -327,16 +356,18 @@ html {
                     width: 100%;
                     border-radius: 5px;
                     outline: none;
-                    border: 1px solid $main-color;
+                    border: 1px solid var(--border);
                     font-size: 17px;
                     padding: 5px 10px;
                     margin-left: 5px;
                     transition: 0.3s box-shadow;
+                    background-color: var(--background-color);
+                    color: var(--font-color);
                     &:focus {
-                        border: 2px solid $main-color-darken;
+                        border: 2px solid var(--border-darken);
                     }
                     &:hover {
-                        box-shadow: 0 0 5px black;
+                        box-shadow: 0 0 5px var(--font-color);
                     }
                 }
             }
@@ -358,22 +389,159 @@ html {
             }
         }
     }
-    .completed {
-        background-color: rgb(226, 94, 94);
+    .drag {
+        background-color: darkgreen;
     }
-    .doing {
-        background-color: yellowgreen;
+}
+
+.toggle-theme-wrapper {
+    h3 {
+        margin: 5px 10px;
+        text-align: center;
+        color: white;
     }
-    .drag-doing {
-        background-color: green;
+    .toggle-theme-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        span {
+            font-size: 25px;
+        }
+        .toggle-theme {
+            position: relative;
+            display: inline-block;
+            height: 34px;
+            width: 60px;
+            input {
+                display: none;
+            }
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+
+            input:checked + .slider {
+                background-color: cornflowerblue;
+            }
+        }
+        .slider {
+            background-color: #ccc;
+            position: absolute;
+            cursor: pointer;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            transition: 0.3s all;
+            border-radius: 34px;
+            &:before {
+                background-color: #fff;
+                bottom: 4px;
+                content: '';
+                height: 26px;
+                left: 4px;
+                position: absolute;
+                transition: 0.3s all;
+                width: 26px;
+                border-radius: 50%;
+            }
+        }
     }
-    .drag-complete {
-        background-color: rgb(196, 44, 44);
+}
+
+@mixin icon-menu {
+    color: white;
+    padding: 15px;
+    font-size: 35px;
+    cursor: pointer;
+    transition: 0.3s color;
+    &:hover {
+        color: #9b9b9b;
     }
-    .drag-todo {
-        background-color: rgb(19, 136, 145);
+}
+.sidebar {
+    background-color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px 1px #333333;
+    .icon-bars {
+        @include icon-menu;
+        position: fixed;
+        top: 5px;
+        left: 5px;
     }
-    .drag-form {
-        box-shadow: 0 0 25px black;
+    .heading {
+        text-transform: uppercase;
+        font-size: 35px;
+        color: white;
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+.nav-menu {
+    background-color: #333333;
+    width: 300px;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 0.8s;
+    z-index: 3;
+    box-shadow: 1px 0 3px 1px #333333;
+    .navbar-close {
+        @include icon-menu;
+    }
+    .nav-menu-items {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .copyrights {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        margin-bottom: 5px;
+        text-align: center;
+        width: 100%;
+        color: white;
+        font-size: 13px;
+        a {
+            color: white;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
+.active {
+    left: 0;
+    transition: 0.4s;
+}
+.random-joke-container {
+    h3 {
+        margin: 5px;
+        text-align: center;
+        color: white;
+    }
+    .random-joke {
+        background-color: $main-color-lighter;
+        padding: 10px;
+        border-radius: 5px;
+        width: 85%;
+        margin: auto;
+        color: white;
+        text-align: center;
+        p {
+            font-weight: bold;
+            font-size: 18px;
+        }
     }
 }

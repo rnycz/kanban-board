@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './styles/styles.css'
 import AddNewTask from './components/AddNewTask'
 import TodoList from './components/TodoList'
+import Sidebar from './components/Sidebar'
 import { Todo, addTaskError } from './model'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { ToastContainer } from 'react-toastify'
@@ -88,7 +89,7 @@ const App: React.FC = () => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="App">
-                <span className="heading">Kanban Board</span>
+                <Sidebar />
                 <AddNewTask
                     todoInput={todoInput}
                     setTodoInput={setTodoInput}

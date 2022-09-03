@@ -50,53 +50,56 @@ const AddNewTask: React.FC<Props> = ({
             </button>
             {showOptions ? (
                 <div className="task-modal">
-                    <span
-                        className="close-modal"
-                        onClick={() => setShowOptions(!showOptions)}
-                    >
-                        <ImCross />
-                    </span>
-                    <form
-                        className="input"
-                        onSubmit={(e) => {
-                            handleAdd(e)
-                            inputRef.current?.blur()
-                        }}
-                    >
-                        <input
-                            type="input"
-                            placeholder="Enter a task"
-                            className="input-box"
-                            ref={inputRef}
-                            value={todoInput}
-                            onChange={(e) => setTodoInput(e.target.value)}
-                        />
-                        <button className="input-submit" type="submit">
-                            ADD
-                        </button>
-                    </form>
-                    <div className="options-container">
-                        <div className="input-color-container">
-                            <CirclePicker
-                                className="input-color"
-                                colors={colors}
-                                onChange={handleChangeColor}
+                    <div className="task-modal-wrap">
+                        <span
+                            className="close-modal"
+                            onClick={() => setShowOptions(!showOptions)}
+                        >
+                            <ImCross />
+                        </span>
+                        <form
+                            className="input"
+                            onSubmit={(e) => {
+                                handleAdd(e)
+                                inputRef.current?.blur()
+                            }}
+                        >
+                            <input
+                                type="input"
+                                placeholder="Enter a task"
+                                className="input-box"
+                                ref={inputRef}
+                                value={todoInput}
+                                onChange={(e) => setTodoInput(e.target.value)}
                             />
-                            <span
-                                className="task-color"
-                                style={{ backgroundColor: color }}
-                            >
-                                Task Color
-                            </span>
-                            <span className="task-finish">
-                                Deadline: {switchDateFormat(displayEditDate)}
-                            </span>
+                            <button className="input-submit" type="submit">
+                                ADD
+                            </button>
+                        </form>
+                        <div className="options-container">
+                            <div className="input-color-container">
+                                <CirclePicker
+                                    className="input-color"
+                                    colors={colors}
+                                    onChange={handleChangeColor}
+                                />
+                                <span
+                                    className="task-color"
+                                    style={{ backgroundColor: color }}
+                                >
+                                    Task Color
+                                </span>
+                                <span className="task-finish">
+                                    Deadline:{' '}
+                                    {switchDateFormat(displayEditDate)}
+                                </span>
+                            </div>
+                            <Calendar
+                                className="calendar"
+                                onChange={onChange}
+                                value={finishTask}
+                            />
                         </div>
-                        <Calendar
-                            className="calendar"
-                            onChange={onChange}
-                            value={finishTask}
-                        />
                     </div>
                 </div>
             ) : null}
