@@ -469,7 +469,7 @@ html {
     box-shadow: 0 1px 3px 1px #333333;
     .icon-bars {
         @include icon-menu;
-        position: fixed;
+        position: absolute;
         top: 5px;
         left: 5px;
     }

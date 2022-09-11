@@ -32,7 +32,7 @@ const AddNewTask: React.FC<Props> = ({
 
     const displayEditDate: string = setDate(finishTask)
 
-    const onChange = (newDate: React.SetStateAction<Date>) => {
+    const onChangeDate = (newDate: React.SetStateAction<Date>) => {
         setFinishTask(newDate)
     }
 
@@ -96,7 +96,7 @@ const AddNewTask: React.FC<Props> = ({
                             </div>
                             <Calendar
                                 className="calendar"
-                                onChange={onChange}
+                                onChange={onChangeDate}
                                 value={finishTask}
                             />
                         </div>

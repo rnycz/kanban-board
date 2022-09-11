@@ -1,12 +1,13 @@
 import { toast } from 'react-toastify'
 
 export interface Todo {
-    id: number
+    _id: number
     todo: string
     isDone: boolean
     color: string
     addDate: string
     finishDate: string
+    type: string
 }
 
 export const colors: string[] = [

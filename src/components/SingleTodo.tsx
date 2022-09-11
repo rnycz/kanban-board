@@ -46,7 +46,7 @@ const SingleTodo: React.FC<Props> = ({
         setEditColor(color.hex)
     }
 
-    const onChange = (newDate: React.SetStateAction<Date>) => {
+    const onChangeDate = (newDate: React.SetStateAction<Date>) => {
         setEditDate(newDate)
         setShowCalendar(false)
     }
@@ -56,15 +56,43 @@ const SingleTodo: React.FC<Props> = ({
     }, [edit])
 
     const handleDone = (id: number) => {
-        setTodos(
-            todos.map((todo) =>
-                todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-            ),
-        )
+        const requestOptions = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                isDone: !todo.isDone,
+            }),
+        }
+        fetch('http://localhost:3001/tasks/' + id, requestOptions)
+            .then((response: Response) => {
+                return response.json()
+            })
+            .then(() => {
+                setTodos(
+                    todos.map((todo) =>
+                        todo._id === id
+                            ? { ...todo, isDone: !todo.isDone }
+                            : todo,
+                    ),
+                )
+            })
+            .catch((error: Error) => console.log('error: ', error))
     }
 
     const handleDelete = (id: number) => {
-        setTodos(todos.filter((todo) => todo.id !== id))
+        const requestOptions = {
+            method: 'DELETE',
+        }
+        fetch('http://localhost:3001/tasks/' + id, requestOptions)
+            .then((response: Response) => {
+                return response.json()
+            })
+            .then(() => {
+                setTodos(todos.filter((todo) => todo._id !== id))
+            })
+            .catch((error: Error) => console.log('error: ', error))
     }
 
     const handleEdit = (e: React.FormEvent, id: number) => {
@@ -72,18 +100,37 @@ const SingleTodo: React.FC<Props> = ({
         if (editTodo === '') {
             emptyTaskOnEdit()
         } else {
-            setTodos(
-                todos.map((todo) =>
-                    todo.id === id
-                        ? {
-                              ...todo,
-                              todo: editTodo,
-                              color: editColor,
-                              finishDate: displayEditDate,
-                          }
-                        : todo,
-                ),
-            )
+            const requestOptions = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    todo: editTodo,
+                    color: editColor,
+                    finishDate: displayEditDate,
+                }),
+            }
+            fetch('http://localhost:3001/tasks/' + id, requestOptions)
+                .then((response: Response) => {
+                    return response.json()
+                })
+                .then(() => {
+                    setTodos(
+                        todos.map((todo) =>
+                            todo._id === id
+                                ? {
+                                      ...todo,
+                                      todo: editTodo,
+                                      color: editColor,
+                                      finishDate: displayEditDate,
+                                  }
+                                : todo,
+                        ),
+                    )
+                })
+                .catch((error: Error) => console.log('error: ', error))
+
             setEdit(false)
             if (
                 todo.todo !== editTodo ||
@@ -96,11 +143,11 @@ const SingleTodo: React.FC<Props> = ({
     }
 
     return (
-        <Draggable draggableId={todo.id.toString()} index={index}>
+        <Draggable draggableId={todo._id.toString()} index={index}>
             {(provided) => (
                 <form
                     className="single-todo"
-                    onSubmit={(e) => handleEdit(e, todo.id)}
+                    onSubmit={(e) => handleEdit(e, todo._id)}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
@@ -127,7 +174,7 @@ const SingleTodo: React.FC<Props> = ({
                                 </span>
                                 {showCalendar ? (
                                     <Calendar
-                                        onChange={onChange}
+                                        onChange={onChangeDate}
                                         value={editDate}
                                     />
                                 ) : null}
@@ -201,7 +248,7 @@ const SingleTodo: React.FC<Props> = ({
                                         markedTask()
                                     }
                                     if (edit) {
-                                        handleEdit(e, todo.id)
+                                        handleEdit(e, todo._id)
                                     }
                                 }}
                             >
@@ -210,7 +257,7 @@ const SingleTodo: React.FC<Props> = ({
                             <span
                                 className="icon"
                                 onClick={() => {
-                                    handleDelete(todo.id)
+                                    handleDelete(todo._id)
                                     taskDeleted()
                                 }}
                             >
@@ -220,7 +267,7 @@ const SingleTodo: React.FC<Props> = ({
                                 className="icon"
                                 onClick={() => {
                                     if (!edit) {
-                                        handleDone(todo.id)
+                                        handleDone(todo._id)
                                     } else {
                                         editTaskOn()
                                     }

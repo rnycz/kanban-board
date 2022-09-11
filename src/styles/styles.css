@@ -468,7 +468,7 @@ html {
   font-size: 35px;
   cursor: pointer;
   transition: 0.3s color;
-  position: fixed;
+  position: absolute;
   top: 5px;
   left: 5px;
 }
