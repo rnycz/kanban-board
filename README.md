@@ -2,7 +2,7 @@
 
 An application used to manage your tasks.<br />
 Built with React, TypeScript, SCSS<br />
-In order to work well with this application, you need to clone the API from this [repo](https://github.com/rnycz/kanban-board-api) created specifically for this project and follow the steps to set it up. <br />
+In order to work well with this application, you need to clone the API from this [repo](https://github.com/rnycz/kanban-board-api) created specifically for this project and follow the steps to set it up. If not, you can continue in offline mode, but if you close the application, the progress will not be saved. <br />
 The following features have been implemented:
 
 -   Enter the task, set the color and proposed end date for the task
@@ -12,8 +12,9 @@ The following features have been implemented:
 -   Sidebar with toggle button (dark/light mode for task cards) and random joke
 -   Random joke fetched from [Dev Joke API](https://documenter.getpostman.com/view/16443297/TzkyLee7)
 -   Tasks fetched from custom API. Performing operations in the application causes changes in the database, e.g. adding a new task or deleting a task
+-   Offline mode
 
-TODO: offline mode
+TODO: new features
 
 ## Installation and Setup Instructions
 

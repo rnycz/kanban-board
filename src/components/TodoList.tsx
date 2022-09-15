@@ -11,6 +11,7 @@ interface Props {
     setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
     doingTodos: Todo[]
     setDoingTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+    online: boolean
 }
 
 const TodoList: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const TodoList: React.FC<Props> = ({
     setCompletedTodos,
     doingTodos,
     setDoingTodos,
+    online,
 }: Props) => {
     return (
         <div className="container">
@@ -27,7 +29,7 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos ${
-                            snapshot.isDraggingOver ? 'drag' : ''
+                            snapshot.isDraggingOver ? 'drag' : null
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
@@ -41,6 +43,7 @@ const TodoList: React.FC<Props> = ({
                                     todo={todo}
                                     todos={todos}
                                     setTodos={setTodos}
+                                    online={online}
                                 />
                             ) : null,
                         )}
@@ -52,7 +55,7 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos doing ${
-                            snapshot.isDraggingOver ? 'drag' : ''
+                            snapshot.isDraggingOver ? 'drag' : null
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
@@ -66,6 +69,7 @@ const TodoList: React.FC<Props> = ({
                                     todo={todo}
                                     todos={doingTodos}
                                     setTodos={setDoingTodos}
+                                    online={online}
                                 />
                             ) : null,
                         )}
@@ -77,7 +81,7 @@ const TodoList: React.FC<Props> = ({
                 {(provided, snapshot) => (
                     <div
                         className={`todos completed ${
-                            snapshot.isDraggingOver ? 'drag' : ''
+                            snapshot.isDraggingOver ? 'drag' : null
                         }`}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
@@ -91,6 +95,7 @@ const TodoList: React.FC<Props> = ({
                                     todo={todo}
                                     todos={completedTodos}
                                     setTodos={setCompletedTodos}
+                                    online={online}
                                 />
                             ) : null,
                         )}

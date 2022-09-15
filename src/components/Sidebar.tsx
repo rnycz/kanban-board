@@ -4,13 +4,18 @@ import DarkModeSwitch from './DarkModeSwitch'
 import RandomJoke from './RandomJoke'
 import { FaBars } from 'react-icons/fa'
 import { VscChromeClose } from 'react-icons/vsc'
+import { GoPrimitiveDot } from 'react-icons/go'
 
-const Sidebar: React.FC = () => {
+interface Props {
+    online: boolean
+}
+
+const Sidebar: React.FC<Props> = ({ online }: Props) => {
     const [sidebar, setSidebar] = useState<boolean>(false)
 
     return (
         <>
-            <div className="sidebar">
+            <div className="topbar">
                 <FaBars
                     className="icon-bars"
                     onClick={() => setSidebar(!sidebar)}
@@ -25,10 +30,24 @@ const Sidebar: React.FC = () => {
                 <div className="nav-menu-items">
                     <DarkModeSwitch />
                     <RandomJoke />
+                    <div className="status-info">
+                        <span>
+                            <GoPrimitiveDot
+                                className={
+                                    online ? 'online-icon' : 'offline-icon'
+                                }
+                            />
+                            {online ? 'Online' : 'Offline'}
+                        </span>
+                    </div>
                 </div>
                 <div className="copyrights">
                     Created by{' '}
-                    <a href="https://github.com/rnycz" target="_blank">
+                    <a
+                        href="https://github.com/rnycz"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
                         rnycz
                     </a>{' '}
                     {new Date().getFullYear()}

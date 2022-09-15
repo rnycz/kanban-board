@@ -3,6 +3,7 @@ import './styles/styles.css'
 import AddNewTask from './components/AddNewTask'
 import TodoList from './components/TodoList'
 import Sidebar from './components/Sidebar'
+import OfflineModeInfo from './components/OfflineModeInfo'
 import { Todo, addTaskError } from './model'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { ToastContainer } from 'react-toastify'
@@ -19,6 +20,7 @@ const App: React.FC = () => {
     const [showOptions, setShowOptions] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<null>(null)
+    const [online, setOnline] = useState<boolean>(true)
 
     const pad = (num: number) => ('0' + num).slice(-2)
     const setDate = (date: Date) => {
@@ -38,57 +40,74 @@ const App: React.FC = () => {
             })
             .then((newData: any) => {
                 setError(null)
+                setOnline(true)
                 setTodos(newData)
                 setCompletedTodos(newData)
                 setDoingTodos(newData)
             })
             .catch((err: any) => {
+                setOnline(false)
                 setError(err.message)
                 setTodos([...todos])
             })
             .finally(() => {
                 setLoading(false)
             })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAdd = (e: React.FormEvent) => {
         e.preventDefault()
 
         if (todoInput && color) {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    todo: todoInput,
-                    isDone: false,
-                    color: color,
-                    addDate: setDate(new Date()),
-                    finishDate: setDate(finishTask),
-                    type: 'todo',
-                }),
+            if (online) {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        todo: todoInput,
+                        isDone: false,
+                        color: color,
+                        addDate: setDate(new Date()),
+                        finishDate: setDate(finishTask),
+                        type: 'todo',
+                    }),
+                }
+                fetch('http://localhost:3001/tasks/', requestOptions)
+                    .then((response: Response) => {
+                        return response.json()
+                    })
+                    .then((result: any) => {
+                        setTodos([
+                            ...todos,
+                            {
+                                _id: result._id,
+                                todo: todoInput,
+                                isDone: false,
+                                color: color,
+                                addDate: setDate(new Date()),
+                                finishDate: setDate(finishTask),
+                                type: 'todo',
+                            },
+                        ])
+                    })
+                    .catch((error: Error) => console.log('error: ', error))
+            } else {
+                setTodos([
+                    ...todos,
+                    {
+                        _id: Date.now(),
+                        todo: todoInput,
+                        isDone: false,
+                        color: color,
+                        addDate: setDate(new Date()),
+                        finishDate: setDate(finishTask),
+                        type: 'todo',
+                    },
+                ])
             }
-            fetch('http://localhost:3001/tasks/', requestOptions)
-                .then((response: Response) => {
-                    return response.json()
-                })
-                .then((result: any) => {
-                    setTodos([
-                        ...todos,
-                        {
-                            _id: result._id,
-                            todo: todoInput,
-                            isDone: false,
-                            color: color,
-                            addDate: setDate(new Date()),
-                            finishDate: setDate(finishTask),
-                            type: 'todo',
-                        },
-                    ])
-                })
-                .catch((error: Error) => console.log('error: ', error))
-
             setTodoInput('')
             setShowOptions(!showOptions)
             setFinishTask(new Date())
@@ -132,60 +151,91 @@ const App: React.FC = () => {
         }
 
         if (destination.droppableId === 'TodosList') {
-            requestOptions = {
-                ...requestOptions,
-                body: JSON.stringify({
-                    type: 'todo',
-                }),
+            if (online) {
+                requestOptions = {
+                    ...requestOptions,
+                    body: JSON.stringify({
+                        type: 'todo',
+                    }),
+                }
+                fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
+                    .then((response: Response) => {
+                        return response.json()
+                    })
+                    .then((result: any) => {
+                        todo.splice(destination.index, 0, result)
+                        setTodos([...todo])
+                    })
+                    .catch((error: Error) => console.log('error: ', error))
+            } else {
+                todo.splice(destination.index, 0, add)
             }
-            fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
-                .then((response: Response) => {
-                    return response.json()
-                })
-                .then((result: any) => {
-                    todo.splice(destination.index, 0, result)
-                    setTodos([...todos])
-                })
-                .catch((error: Error) => console.log('error: ', error))
         } else if (destination.droppableId === 'TodosCompleted') {
-            requestOptions = {
-                ...requestOptions,
-                body: JSON.stringify({
-                    type: 'completed',
-                }),
+            if (online) {
+                requestOptions = {
+                    ...requestOptions,
+                    body: JSON.stringify({
+                        type: 'completed',
+                    }),
+                }
+                fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
+                    .then((response: Response) => {
+                        return response.json()
+                    })
+                    .then((result: any) => {
+                        complete.splice(destination.index, 0, result)
+                        setCompletedTodos([...complete])
+                    })
+                    .catch((error: Error) => console.log('error: ', error))
+            } else {
+                complete.splice(destination.index, 0, add)
             }
-            fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
-                .then((response: Response) => {
-                    return response.json()
-                })
-                .then((result: any) => {
-                    complete.splice(destination.index, 0, result)
-                    setCompletedTodos([...completedTodos])
-                })
-                .catch((error: Error) => console.log('error: ', error))
         } else {
-            requestOptions = {
-                ...requestOptions,
-                body: JSON.stringify({
-                    type: 'doing',
-                }),
+            if (online) {
+                requestOptions = {
+                    ...requestOptions,
+                    body: JSON.stringify({
+                        type: 'doing',
+                    }),
+                }
+                fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
+                    .then((response: Response) => {
+                        return response.json()
+                    })
+                    .then((result: any) => {
+                        doing.splice(destination.index, 0, result)
+                        setDoingTodos([...doing])
+                    })
+                    .catch((error: Error) => console.log('error: ', error))
+            } else {
+                doing.splice(destination.index, 0, add)
             }
-            fetch('http://localhost:3001/tasks/' + add._id, requestOptions)
-                .then((response: Response) => {
-                    return response.json()
-                })
-                .then((result: any) => {
-                    doing.splice(destination.index, 0, result)
-                    setDoingTodos([...doingTodos])
-                })
-                .catch((error: Error) => console.log('error: ', error))
+        }
+        if (!online) {
+            setCompletedTodos(
+                complete.map((todo) =>
+                    todo._id === add._id
+                        ? { ...todo, type: 'completed' }
+                        : todo,
+                ),
+            )
+            setDoingTodos(
+                doing.map((todo) =>
+                    todo._id === add._id ? { ...todo, type: 'doing' } : todo,
+                ),
+            )
+            setTodos(
+                todo.map((todo) =>
+                    todo._id === add._id ? { ...todo, type: 'todo' } : todo,
+                ),
+            )
         }
     }
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="App">
-                <Sidebar />
+                <Sidebar online={online} />
                 <AddNewTask
                     todoInput={todoInput}
                     setTodoInput={setTodoInput}
@@ -204,11 +254,13 @@ const App: React.FC = () => {
                     setCompletedTodos={setCompletedTodos}
                     doingTodos={doingTodos}
                     setDoingTodos={setDoingTodos}
+                    online={online}
                 />
-                {loading && <span>Loading tasks...</span>}
-                {error && (
-                    <span>Try again! Check the connection to the server</span>
-                )}
+                <OfflineModeInfo
+                    loading={loading}
+                    error={error}
+                    online={online}
+                />
                 <ToastContainer
                     newestOnTop={true}
                     pauseOnFocusLoss={false}

@@ -36,9 +36,16 @@ html {
   .container {
     flex-direction: column;
   }
+  .task-modal .task-modal-wrap .close-modal {
+    right: 5px !important;
+    top: 5px !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 20px !important;
+  }
 }
 @media (max-width: 420px) {
-  .sidebar .icon-bars {
+  .topbar .icon-bars {
     top: 85px !important;
   }
 }
@@ -286,11 +293,14 @@ html {
   gap: 3px;
   font-size: 14px;
 }
-.container .todos .single-todo .time-container .date:nth-child(2) .date-icon {
-  color: black;
-}
 .container .todos .single-todo .time-container .date .date-icon {
   font-size: 18px;
+}
+.container .todos .single-todo .time-container .date .warning {
+  color: red !important;
+}
+.container .todos .single-todo .time-container .date .expired {
+  color: black;
 }
 .container .todos .single-todo .time-container .date-edit {
   transition: 0.3s all;
@@ -385,12 +395,12 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 15px;
 }
 .container .todos .single-todo .icons-container .icon {
-  margin-left: 10px;
   width: 25px;
   height: 25px;
-  font-size: 25px;
+  font-size: 22px;
   cursor: pointer;
   transition: 0.3s transform;
 }
@@ -453,7 +463,7 @@ html {
   border-radius: 50%;
 }
 
-.sidebar {
+.topbar {
   background-color: #333333;
   display: flex;
   justify-content: center;
@@ -462,7 +472,7 @@ html {
   margin-bottom: 20px;
   box-shadow: 0 1px 3px 1px #333333;
 }
-.sidebar .icon-bars {
+.topbar .icon-bars {
   color: white;
   padding: 15px;
   font-size: 35px;
@@ -472,10 +482,10 @@ html {
   top: 5px;
   left: 5px;
 }
-.sidebar .icon-bars:hover {
+.topbar .icon-bars:hover {
   color: #9b9b9b;
 }
-.sidebar .heading {
+.topbar .heading {
   text-transform: uppercase;
   font-size: 35px;
   color: white;
@@ -513,6 +523,26 @@ html {
   align-items: center;
   flex-direction: column;
   gap: 20px;
+}
+.nav-menu .nav-menu-items .status-info {
+  color: white;
+  text-align: center;
+}
+.nav-menu .nav-menu-items .status-info h3 {
+  margin: 0;
+}
+.nav-menu .nav-menu-items .status-info span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-menu .nav-menu-items .status-info .online-icon {
+  color: green;
+  font-size: 30px;
+}
+.nav-menu .nav-menu-items .status-info .offline-icon {
+  color: red;
+  font-size: 30px;
 }
 .nav-menu .copyrights {
   position: absolute;
@@ -553,4 +583,36 @@ html {
 .random-joke-container .random-joke p {
   font-weight: bold;
   font-size: 18px;
+}
+
+.offline-info {
+  width: 50%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #7c7b7b;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+  box-shadow: 0 0 5px black;
+}
+.offline-info div h3 {
+  margin: 0;
+}
+.offline-info div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.offline-info .close-info {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s color;
+}
+.offline-info .close-info:hover {
+  color: #333333;
 }/*# sourceMappingURL=styles.css.map */

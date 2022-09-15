@@ -9,9 +9,15 @@ import {
     emptyTaskOnEdit,
 } from '../model'
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
-import { MdDoneAll, MdRemoveDone, MdDownloadDone } from 'react-icons/md'
+import {
+    MdDoneAll,
+    MdRemoveDone,
+    MdDownloadDone,
+    MdAccessTime,
+} from 'react-icons/md'
 import { GoDiffAdded } from 'react-icons/go'
 import { FcExpired } from 'react-icons/fc'
+import { BsExclamationLg } from 'react-icons/bs'
 import '../styles/styles.css'
 import { Draggable } from 'react-beautiful-dnd'
 import { CirclePicker, ColorResult } from 'react-color'
@@ -23,6 +29,7 @@ interface Props {
     todo: Todo
     todos: Todo[]
     setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+    online: boolean
 }
 
 const SingleTodo: React.FC<Props> = ({
@@ -30,6 +37,7 @@ const SingleTodo: React.FC<Props> = ({
     todo,
     todos,
     setTodos,
+    online,
 }: Props) => {
     const [edit, setEdit] = useState<boolean>(false)
     const [editTodo, setEditTodo] = useState<string>(todo.todo)
@@ -50,65 +58,25 @@ const SingleTodo: React.FC<Props> = ({
         setEditDate(newDate)
         setShowCalendar(false)
     }
+    const dateDiff = (today: Date, finishDate: string) => {
+        const t2: number = new Date(finishDate).getTime()
+        const t1: number = today.getTime()
+        return (t2 - t1) / (24 * 3600 * 1000)
+    }
 
     useEffect(() => {
         inputRef.current?.focus()
     }, [edit])
 
     const handleDone = (id: number) => {
-        const requestOptions = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                isDone: !todo.isDone,
-            }),
-        }
-        fetch('http://localhost:3001/tasks/' + id, requestOptions)
-            .then((response: Response) => {
-                return response.json()
-            })
-            .then(() => {
-                setTodos(
-                    todos.map((todo) =>
-                        todo._id === id
-                            ? { ...todo, isDone: !todo.isDone }
-                            : todo,
-                    ),
-                )
-            })
-            .catch((error: Error) => console.log('error: ', error))
-    }
-
-    const handleDelete = (id: number) => {
-        const requestOptions = {
-            method: 'DELETE',
-        }
-        fetch('http://localhost:3001/tasks/' + id, requestOptions)
-            .then((response: Response) => {
-                return response.json()
-            })
-            .then(() => {
-                setTodos(todos.filter((todo) => todo._id !== id))
-            })
-            .catch((error: Error) => console.log('error: ', error))
-    }
-
-    const handleEdit = (e: React.FormEvent, id: number) => {
-        e.preventDefault()
-        if (editTodo === '') {
-            emptyTaskOnEdit()
-        } else {
+        if (online) {
             const requestOptions = {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    todo: editTodo,
-                    color: editColor,
-                    finishDate: displayEditDate,
+                    isDone: !todo.isDone,
                 }),
             }
             fetch('http://localhost:3001/tasks/' + id, requestOptions)
@@ -119,18 +87,89 @@ const SingleTodo: React.FC<Props> = ({
                     setTodos(
                         todos.map((todo) =>
                             todo._id === id
-                                ? {
-                                      ...todo,
-                                      todo: editTodo,
-                                      color: editColor,
-                                      finishDate: displayEditDate,
-                                  }
+                                ? { ...todo, isDone: !todo.isDone }
                                 : todo,
                         ),
                     )
                 })
                 .catch((error: Error) => console.log('error: ', error))
+        } else {
+            setTodos(
+                todos.map((todo) =>
+                    todo._id === id ? { ...todo, isDone: !todo.isDone } : todo,
+                ),
+            )
+        }
+    }
 
+    const handleDelete = (id: number) => {
+        if (online) {
+            const requestOptions = {
+                method: 'DELETE',
+            }
+            fetch('http://localhost:3001/tasks/' + id, requestOptions)
+                .then((response: Response) => {
+                    return response.json()
+                })
+                .then(() => {
+                    setTodos(todos.filter((todo) => todo._id !== id))
+                })
+                .catch((error: Error) => console.log('error: ', error))
+        } else {
+            setTodos(todos.filter((todo) => todo._id !== id))
+        }
+    }
+
+    const handleEdit = (e: React.FormEvent, id: number) => {
+        e.preventDefault()
+        if (editTodo === '') {
+            emptyTaskOnEdit()
+        } else {
+            if (online) {
+                const requestOptions = {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        todo: editTodo,
+                        color: editColor,
+                        finishDate: displayEditDate,
+                    }),
+                }
+                fetch('http://localhost:3001/tasks/' + id, requestOptions)
+                    .then((response: Response) => {
+                        return response.json()
+                    })
+                    .then(() => {
+                        setTodos(
+                            todos.map((todo) =>
+                                todo._id === id
+                                    ? {
+                                          ...todo,
+                                          todo: editTodo,
+                                          color: editColor,
+                                          finishDate: displayEditDate,
+                                      }
+                                    : todo,
+                            ),
+                        )
+                    })
+                    .catch((error: Error) => console.log('error: ', error))
+            } else {
+                setTodos(
+                    todos.map((todo) =>
+                        todo._id === id
+                            ? {
+                                  ...todo,
+                                  todo: editTodo,
+                                  color: editColor,
+                                  finishDate: displayEditDate,
+                              }
+                            : todo,
+                    ),
+                )
+            }
             setEdit(false)
             if (
                 todo.todo !== editTodo ||
@@ -159,7 +198,7 @@ const SingleTodo: React.FC<Props> = ({
                         </span>
                         {edit ? (
                             <div className="date date-edit">
-                                <FcExpired
+                                <MdAccessTime
                                     className="date-icon"
                                     onClick={() =>
                                         setShowCalendar(!showCalendar)
@@ -181,7 +220,14 @@ const SingleTodo: React.FC<Props> = ({
                             </div>
                         ) : (
                             <span className="date">
-                                <FcExpired className="date-icon" />
+                                {dateDiff(new Date(), todo.finishDate) <= 1 &&
+                                dateDiff(new Date(), todo.finishDate) > -1 ? (
+                                    <BsExclamationLg className="date-icon warning" />
+                                ) : null}
+                                {dateDiff(new Date(), todo.finishDate) < -1 ? (
+                                    <FcExpired className="date-icon expired" />
+                                ) : null}
+                                <MdAccessTime className="date-icon" />
                                 {switchDateFormat(todo.finishDate)}
                             </span>
                         )}
@@ -214,18 +260,12 @@ const SingleTodo: React.FC<Props> = ({
                                     ref={inputRef}
                                 />
                             </div>
-                        ) : todo.isDone ? (
-                            <div className="single-todo-container done">
-                                <div
-                                    className="single-todo-color"
-                                    style={{ backgroundColor: todo.color }}
-                                ></div>
-                                <span className="single-todo-text">
-                                    {todo.todo}
-                                </span>
-                            </div>
                         ) : (
-                            <div className="single-todo-container">
+                            <div
+                                className={`single-todo-container ${
+                                    todo.isDone ? 'done' : null
+                                }`}
+                            >
                                 <div
                                     className="single-todo-color"
                                     style={{ backgroundColor: todo.color }}
