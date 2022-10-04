@@ -215,6 +215,7 @@ const SingleTodo: React.FC<Props> = ({
                                     <Calendar
                                         onChange={onChangeDate}
                                         value={editDate}
+                                        locale="en-EN"
                                     />
                                 ) : null}
                             </div>

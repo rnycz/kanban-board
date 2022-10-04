@@ -1,28 +1,19 @@
 import React from 'react'
 import { Droppable } from 'react-beautiful-dnd'
-import { Todo } from '../model'
 import '../styles/styles.css'
 import SingleTodo from './SingleTodo'
+import { useStateContext } from '../contexts/ContextProvider'
 
-interface Props {
-    todos: Todo[]
-    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-    completedTodos: Todo[]
-    setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-    doingTodos: Todo[]
-    setDoingTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-    online: boolean
-}
-
-const TodoList: React.FC<Props> = ({
-    todos,
-    setTodos,
-    completedTodos,
-    setCompletedTodos,
-    doingTodos,
-    setDoingTodos,
-    online,
-}: Props) => {
+const TodoList: React.FC = () => {
+    const {
+        online,
+        todos,
+        setTodos,
+        doingTodos,
+        setDoingTodos,
+        completedTodos,
+        setCompletedTodos,
+    } = useStateContext()
     return (
         <div className="container">
             <Droppable droppableId="TodosList">

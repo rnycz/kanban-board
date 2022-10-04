@@ -5,12 +5,10 @@ import RandomJoke from './RandomJoke'
 import { FaBars } from 'react-icons/fa'
 import { VscChromeClose } from 'react-icons/vsc'
 import { GoPrimitiveDot } from 'react-icons/go'
+import { useStateContext } from '../contexts/ContextProvider'
 
-interface Props {
-    online: boolean
-}
-
-const Sidebar: React.FC<Props> = ({ online }: Props) => {
+const Sidebar: React.FC = () => {
+    const { online } = useStateContext()
     const [sidebar, setSidebar] = useState<boolean>(false)
 
     return (

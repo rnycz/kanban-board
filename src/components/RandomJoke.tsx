@@ -5,7 +5,7 @@ type fetchData = {
     question: string
     punchline: string
 }
-const RandomJoke = () => {
+const RandomJoke: React.FC = () => {
     const [data, setData] = useState<fetchData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<null>(null)

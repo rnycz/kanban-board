@@ -1,17 +1,9 @@
 import React, { useState } from 'react'
 import { ImCross } from 'react-icons/im'
+import { useStateContext } from '../contexts/ContextProvider'
 
-interface Props {
-    loading: boolean
-    error: null
-    online: boolean
-}
-
-const OfflineModeInfo: React.FC<Props> = ({
-    loading,
-    error,
-    online,
-}: Props) => {
+const OfflineModeInfo: React.FC = () => {
+    const { loading, error, online } = useStateContext()
     const [info, setInfo] = useState<boolean>(true)
     return (
         <>
