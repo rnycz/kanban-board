@@ -65,6 +65,9 @@ html {
     .topbar {
         .icon-bars {
             top: 85px !important;
+            left: -5px !important;
+            color: #333333 !important;
+            font-size: 30px !important;
         }
     }
 }
@@ -504,7 +507,7 @@ html {
     top: 0;
     left: -100%;
     transition: 0.8s;
-    z-index: 3;
+    z-index: 100;
     box-shadow: 1px 0 3px 1px #333333;
     .navbar-close {
         @include icon-menu;
@@ -515,6 +518,37 @@ html {
         align-items: center;
         flex-direction: column;
         gap: 20px;
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            a {
+                display: flex;
+                padding: 5px 15px;
+                text-decoration: none;
+                color: white;
+                font-size: 18px;
+                gap: 5px;
+                background-color: #7c7b7b;
+                margin: 5px;
+                border-radius: 5px;
+                transition: 0.3s background-color;
+                &:hover {
+                    background-color: #474747;
+                }
+                .link-icon {
+                    display: flex;
+                    align-items: center;
+                    font-size: 20px;
+                }
+                .link-name {
+                    text-transform: capitalize;
+                }
+            }
+            .link-active {
+                background-color: #474747;
+            }
+        }
         .status-info {
             color: white;
             text-align: center;
@@ -607,6 +641,42 @@ html {
         transition: 0.3s color;
         &:hover {
             color: #333333;
+        }
+    }
+}
+.rbc-calendar {
+    background-color: white;
+    border-radius: 3px;
+    .rbc-show-more {
+        width: 100%;
+        text-align: left;
+        margin-top: 3px;
+    }
+    .rbc-agenda-event-cell {
+        white-space: nowrap;
+    }
+    .rbc-toolbar {
+        .rbc-toolbar-label {
+            font-size: 20px;
+        }
+        .rbc-btn-group {
+            button {
+                cursor: pointer;
+            }
+        }
+    }
+    .rbc-time-view {
+        .rbc-time-content {
+            .rbc-event {
+                flex-flow: column !important;
+            }
+        }
+    }
+}
+@media (max-width: 650px) {
+    .rbc-calendar {
+        .rbc-toolbar {
+            flex-flow: column wrap;
         }
     }
 }

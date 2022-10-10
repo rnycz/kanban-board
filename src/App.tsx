@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import './styles/styles.css'
-import AddNewTask from './components/AddNewTask'
-import TodoList from './components/TodoList'
+import KanbanBoardPage from './pages/KanbanBoardPage'
+import EventCalendarPage from './pages/EventCalendarPage'
 import Sidebar from './components/Sidebar'
-import OfflineModeInfo from './components/OfflineModeInfo'
 import { Todo } from './model'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-calendar/dist/Calendar.css'
 import { useStateContext } from './contexts/ContextProvider'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App: React.FC = () => {
     const {
@@ -168,12 +168,31 @@ const App: React.FC = () => {
     }
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+        <BrowserRouter>
             <div className="App">
                 <Sidebar />
-                <AddNewTask />
-                <TodoList />
-                <OfflineModeInfo />
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <DragDropContext onDragEnd={onDragEnd}>
+                                <KanbanBoardPage />
+                            </DragDropContext>
+                        }
+                    />
+                    <Route
+                        path="/kanban-board"
+                        element={
+                            <DragDropContext onDragEnd={onDragEnd}>
+                                <KanbanBoardPage />
+                            </DragDropContext>
+                        }
+                    />
+                    <Route
+                        path="/event-calendar"
+                        element={<EventCalendarPage />}
+                    />
+                </Routes>
                 <ToastContainer
                     newestOnTop={true}
                     pauseOnFocusLoss={false}
@@ -185,7 +204,7 @@ const App: React.FC = () => {
                     draggable={true}
                 />
             </div>
-        </DragDropContext>
+        </BrowserRouter>
     )
 }
 
