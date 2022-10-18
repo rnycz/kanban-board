@@ -64,7 +64,7 @@ html {
 @media (max-width: 420px) {
     .topbar {
         .icon-bars {
-            top: 85px !important;
+            top: 150px !important;
             left: -5px !important;
             color: #333333 !important;
             font-size: 30px !important;
@@ -529,12 +529,12 @@ html {
                 color: white;
                 font-size: 18px;
                 gap: 5px;
-                background-color: #7c7b7b;
+                background-color: $main-color-lighter;
                 margin: 5px;
                 border-radius: 5px;
                 transition: 0.3s background-color;
                 &:hover {
-                    background-color: #474747;
+                    background-color: $main-color;
                 }
                 .link-icon {
                     display: flex;
@@ -546,7 +546,7 @@ html {
                 }
             }
             .link-active {
-                background-color: #474747;
+                background-color: $main-color;
             }
         }
         .status-info {
@@ -677,6 +677,141 @@ html {
     .rbc-calendar {
         .rbc-toolbar {
             flex-flow: column wrap;
+        }
+    }
+    .event-details {
+        .event-details-content {
+            width: 90% !important;
+        }
+    }
+}
+.wrapper-event {
+    position: relative;
+    padding: 15px 0 5px 0;
+    margin: auto;
+    width: 90%;
+    .input-event {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 3px solid #9b9b9b;
+        outline: 0;
+        font-size: 18px;
+        color: white;
+        padding: 5px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+        &::placeholder {
+            color: transparent;
+        }
+        &:placeholder-shown ~ .label-event {
+            font-size: 20px;
+            cursor: text;
+            top: 20px;
+        }
+        &:focus {
+            ~ .label-event {
+                position: absolute;
+                top: -5px;
+                display: block;
+                transition: 0.2s;
+                font-size: 16px;
+                color: #4f96d4;
+                font-weight: bold;
+            }
+            border-image: linear-gradient(to right, #4f96d4, $main-color);
+            border-image-slice: 1;
+        }
+    }
+    .label-event {
+        position: absolute;
+        top: -5px;
+        display: block;
+        transition: 0.2s;
+        color: #9b9b9b;
+    }
+    .info-event-container {
+        position: absolute;
+        right: 5px;
+        top: 20px;
+        .icon-info {
+            font-size: 25px;
+            color: white;
+            cursor: help;
+        }
+        .info-event {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #333333;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 5;
+            width: 200px;
+            text-align: center;
+        }
+    }
+}
+.event-details {
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding-top: 100px;
+    .event-details-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 5px;
+        margin: auto;
+        background-color: #265985;
+        width: 50%;
+        .event-details-header {
+            background-color: #1c4971;
+            width: 100%;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        div:not(.event-details-header) {
+            padding: 10px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            .event-details-icon {
+                font-size: 23px;
+            }
+        }
+        @mixin details-buttons {
+            cursor: pointer;
+            transition: 0.3s color;
+            width: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            &:hover {
+                color: #bababa;
+            }
+        }
+        .event-details-buttons {
+            width: 100%;
+            padding: 0 !important;
+            gap: 0 !important;
+            .event-details-close {
+                @include details-buttons;
+                background-color: green;
+            }
+            .event-details-delete {
+                @include details-buttons;
+                background-color: red;
+            }
         }
     }
 }

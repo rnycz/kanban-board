@@ -5,7 +5,7 @@ type Links = {
     name: string
     icon: JSX.Element
 }
-type Events = {
+export type Events = {
     id: number
     title: string
     allDay?: boolean
@@ -26,7 +26,7 @@ export const links: Links[] = [
 ]
 
 // array of events to display them in event calendar
-export const events: Events[] = [
+export const eventsData: Events[] = [
     {
         id: 1,
         title: 'All day task',

@@ -16,9 +16,9 @@ The following features have been implemented:
 -   Random joke fetched from [Dev Joke API](https://documenter.getpostman.com/view/16443297/TzkyLee7)
 -   Tasks fetched from [custom API](https://github.com/rnycz/kanban-board-api). Performing operations in the application causes changes in the database, e.g. adding a new task or deleting a task
 -   Offline mode
--   Event calendar (working on it)
+-   Event calendar (possbility to add and remove events) - working on it
 
-TODO: user can add events to calendar, calendar styles
+TODO: event calendar styles
 
 ## Installation and Setup Instructions
 
@@ -57,3 +57,5 @@ Sidebar with toggle button, random joke and nav links <br />
 ![](./public/app-screen3.PNG) <br />
 Event calendar <br />
 ![](./public/app-screen4.PNG)
+Event details <br />
+![](./public/app-screen5.PNG)
