@@ -132,6 +132,24 @@ const EventCalendarPage: React.FC = () => {
                 onSelectSlot={handleSelectSlot}
                 onSelectEvent={handleSelectEvent}
                 selectable
+                formats={{
+                    agendaHeaderFormat: ({ start, end }) =>
+                        moment(start).format('DD.MM.YYYY') +
+                        ' - ' +
+                        moment(end).format('DD.MM.YYYY'),
+
+                    agendaTimeRangeFormat: ({ start, end }) =>
+                        moment(start).format('HH:mm') +
+                        ' - ' +
+                        moment(end).format('HH:mm'),
+
+                    agendaTimeFormat: (date) => moment(date).format('HH:mm'),
+                    timeGutterFormat: (date) => moment(date).format('HH:mm'),
+                }}
+                messages={{
+                    previous: 'Previous period',
+                    next: 'Next period',
+                }}
             />
         </div>
     )

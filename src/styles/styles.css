@@ -46,10 +46,12 @@ html {
 }
 @media (max-width: 420px) {
   .topbar .icon-bars {
-    top: 150px !important;
+    top: 83px !important;
     left: -5px !important;
-    color: #333333 !important;
-    font-size: 30px !important;
+  }
+  .wrapper-event {
+    margin: 0px 5px 0px auto !important;
+    width: 80% !important;
   }
 }
 .task-container .task-modal-button {
@@ -654,25 +656,133 @@ html {
 }
 
 .rbc-calendar {
-  background-color: white;
+  background-color: #1f1f1f;
   border-radius: 3px;
 }
-.rbc-calendar .rbc-show-more {
-  width: 100%;
-  text-align: left;
-  margin-top: 3px;
+.rbc-calendar .rbc-today {
+  background-color: #100145;
 }
-.rbc-calendar .rbc-agenda-event-cell {
-  white-space: nowrap;
+.rbc-calendar .rbc-header {
+  color: white;
+  border-bottom: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-header + .rbc-header {
+  border-left: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-toolbar {
+  margin: 5px 5px 10px 5px;
 }
 .rbc-calendar .rbc-toolbar .rbc-toolbar-label {
   font-size: 20px;
+  color: white;
+}
+.rbc-calendar .rbc-toolbar .rbc-btn-group {
+  background-color: #100145;
 }
 .rbc-calendar .rbc-toolbar .rbc-btn-group button {
+  color: white;
   cursor: pointer;
+  border: 1px solid #7c7b7b;
+  transition: 0.2s background-color;
+}
+.rbc-calendar .rbc-toolbar .rbc-btn-group button:hover, .rbc-calendar .rbc-toolbar .rbc-btn-group button:focus {
+  background-color: #1c4971;
+  color: white;
+}
+.rbc-calendar .rbc-toolbar .rbc-btn-group .rbc-active {
+  background-color: #1c4971;
+  transition: 0.2s color;
+}
+.rbc-calendar .rbc-toolbar .rbc-btn-group .rbc-active:hover {
+  color: white;
+}
+.rbc-calendar .rbc-month-view {
+  border: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-month-view .rbc-off-range-bg {
+  background-color: #474747;
+}
+.rbc-calendar .rbc-month-view .rbc-today {
+  background-color: #100145;
+}
+.rbc-calendar .rbc-month-view .rbc-date-cell .rbc-button-link {
+  color: white;
+  transition: 0.2s transform;
+}
+.rbc-calendar .rbc-month-view .rbc-date-cell .rbc-button-link:hover {
+  transform: scale(1.1);
+}
+.rbc-calendar .rbc-month-view .rbc-show-more {
+  margin-top: 3px;
+  background-color: inherit;
+  width: 90%;
+  text-align: left;
+  color: white;
+  transition: 0.2s color;
+}
+.rbc-calendar .rbc-month-view .rbc-show-more:hover {
+  color: #4f96d4;
+}
+.rbc-calendar .rbc-month-view .rbc-selected-cell {
+  background-color: #035106;
+}
+.rbc-calendar .rbc-month-view .rbc-month-row + .rbc-month-row {
+  border-top: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view {
+  border: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view .rbc-time-header-content {
+  border-left: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view .rbc-time-header-content .rbc-header button {
+  transition: 0.2s color;
+}
+.rbc-calendar .rbc-time-view .rbc-time-header-content .rbc-header button:hover {
+  color: #4f96d4;
+}
+.rbc-calendar .rbc-time-view .rbc-time-header.rbc-overflowing {
+  border-right: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view .rbc-time-content {
+  border-top: 2px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view .rbc-time-content > * + * > * {
+  border-left: 1px solid #7c7b7b;
 }
 .rbc-calendar .rbc-time-view .rbc-time-content .rbc-event {
   flex-flow: column !important;
+}
+.rbc-calendar .rbc-time-view .rbc-timeslot-group {
+  border-bottom: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-time-view .rbc-timeslot-group .rbc-label {
+  color: white;
+}
+.rbc-calendar .rbc-time-view .rbc-day-slot .rbc-timeslot-group .rbc-time-slot {
+  border-top: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-agenda-view {
+  color: white;
+}
+.rbc-calendar .rbc-agenda-view table.rbc-agenda-table {
+  border: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-agenda-view table.rbc-agenda-table .rbc-agenda-event-cell {
+  white-space: nowrap;
+  cursor: pointer;
+}
+.rbc-calendar .rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  border-bottom: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
+  border-left: 1px solid #7c7b7b;
+}
+.rbc-calendar .rbc-agenda-view table.rbc-agenda-table tbody > tr + tr {
+  border-top: 1px solid #7c7b7b;
 }
 
 @media (max-width: 650px) {
@@ -749,7 +859,7 @@ html {
 .wrapper-event .info-event-container {
   position: absolute;
   right: 5px;
-  top: 20px;
+  top: -10px;
 }
 .wrapper-event .info-event-container .icon-info {
   font-size: 25px;

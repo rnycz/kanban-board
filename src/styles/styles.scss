@@ -64,11 +64,13 @@ html {
 @media (max-width: 420px) {
     .topbar {
         .icon-bars {
-            top: 150px !important;
+            top: 83px !important;
             left: -5px !important;
-            color: #333333 !important;
-            font-size: 30px !important;
         }
+    }
+    .wrapper-event {
+        margin: 0px 5px 0px auto !important;
+        width: 80% !important;
     }
 }
 
@@ -645,30 +647,143 @@ html {
     }
 }
 .rbc-calendar {
-    background-color: white;
+    background-color: $main-color-darken;
     border-radius: 3px;
-    .rbc-show-more {
-        width: 100%;
-        text-align: left;
-        margin-top: 3px;
+    .rbc-today {
+        background-color: #100145;
     }
-    .rbc-agenda-event-cell {
-        white-space: nowrap;
+    .rbc-header {
+        color: white;
+        border-bottom: 1px solid $main-color-lighter;
+        & + .rbc-header {
+            border-left: 1px solid $main-color-lighter;
+        }
+    }
+    .rbc-day-bg {
+        & + .rbc-day-bg {
+            border-left: 1px solid $main-color-lighter;
+        }
     }
     .rbc-toolbar {
+        margin: 5px 5px 10px 5px;
         .rbc-toolbar-label {
             font-size: 20px;
+            color: white;
         }
         .rbc-btn-group {
+            background-color: #100145;
             button {
+                color: white;
                 cursor: pointer;
+                border: 1px solid $main-color-lighter;
+                transition: 0.2s background-color;
+                &:hover,
+                &:focus {
+                    background-color: #1c4971;
+                    color: white;
+                }
+            }
+            .rbc-active {
+                background-color: #1c4971;
+                transition: 0.2s color;
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+    }
+    .rbc-month-view {
+        border: 1px solid $main-color-lighter;
+        .rbc-off-range-bg {
+            background-color: $main-color;
+        }
+        .rbc-today {
+            background-color: #100145;
+        }
+        .rbc-date-cell {
+            .rbc-button-link {
+                color: white;
+                transition: 0.2s transform;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+        .rbc-show-more {
+            margin-top: 3px;
+            background-color: inherit;
+            width: 90%;
+            text-align: left;
+            color: white;
+            transition: 0.2s color;
+            &:hover {
+                color: #4f96d4;
+            }
+        }
+        .rbc-selected-cell {
+            background-color: #035106;
+        }
+        .rbc-month-row {
+            & + .rbc-month-row {
+                border-top: 1px solid $main-color-lighter;
             }
         }
     }
     .rbc-time-view {
+        border: 1px solid $main-color-lighter;
+        .rbc-time-header-content {
+            border-left: 1px solid $main-color-lighter;
+            .rbc-header {
+                button {
+                    transition: 0.2s color;
+                    &:hover {
+                        color: #4f96d4;
+                    }
+                }
+            }
+        }
+        .rbc-time-header.rbc-overflowing {
+            border-right: 1px solid $main-color-lighter;
+        }
         .rbc-time-content {
+            border-top: 2px solid $main-color-lighter;
+            & > * + * > * {
+                border-left: 1px solid $main-color-lighter;
+            }
             .rbc-event {
                 flex-flow: column !important;
+            }
+        }
+        .rbc-timeslot-group {
+            border-bottom: 1px solid $main-color-lighter;
+            .rbc-label {
+                color: white;
+            }
+        }
+        .rbc-day-slot {
+            .rbc-timeslot-group {
+                .rbc-time-slot {
+                    border-top: 1px solid $main-color-lighter;
+                }
+            }
+        }
+    }
+    .rbc-agenda-view {
+        color: white;
+        table.rbc-agenda-table {
+            border: 1px solid $main-color-lighter;
+            .rbc-agenda-event-cell {
+                white-space: nowrap;
+                cursor: pointer;
+            }
+            thead > tr > th {
+                border-bottom: 1px solid $main-color-lighter;
+            }
+            tbody > tr > td + td {
+                border-left: 1px solid $main-color-lighter;
+            }
+            tbody > tr + tr {
+                border-top: 1px solid $main-color-lighter;
             }
         }
     }
@@ -733,7 +848,7 @@ html {
     .info-event-container {
         position: absolute;
         right: 5px;
-        top: 20px;
+        top: -10px;
         .icon-info {
             font-size: 25px;
             color: white;
